@@ -1,0 +1,434 @@
+<html><head><base href="/">
+    <meta charset="UTF-8">
+    <title>Vacaciones Miami-Orlando 2024</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1a237e;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #1a237e;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #283593;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            align-items: start; /* This ensures proper alignment when one card is taller */
+        }
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            color: #283593;
+            padding: 8px;
+            background: #e8eaf6;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .day-card {
+            border: none;
+            min-height: 140px;
+            padding: 12px;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .date {
+            font-weight: 600;
+            color: #283593;
+            text-align: right;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        .activities {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin: 5px 0;
+        }
+        .activity {
+            background: #f5f5f5;
+            padding: 6px;
+            margin: 3px 0;
+            border-radius: 8px;
+            font-size: 0.85em;
+            border-left: 3px solid #1a237e;
+            transition: all 0.2s ease;
+        }
+        .activity:hover {
+            background: #e8eaf6;
+            transform: translateX(3px);
+        }
+        .add-activity {
+            margin-top: auto;
+        }
+        .add-activity input[type="text"] {
+            padding: 6px;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+            width: calc(100% - 12px);
+        }
+        .add-activity button {
+            padding: 4px 8px;
+            font-size: 0.8em;
+            min-width: 60px;
+        }
+        input[type="text"], input[type="file"] {
+            padding: 12px;
+            width: calc(100% - 24px);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="file"]:focus {
+            outline: none;
+            border-color: #1a237e;
+        }
+        button {
+            padding: 10px 15px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background: #283593;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26,35,126,0.2);
+        }
+        .files-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .file-category {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+        .file-list {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        .file-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #283593;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌴 Vacaciones Miami-Orlando 2024 ✨</h1>
+        <div class="calendar-header" id="calendar-header"></div>
+        <div class="calendar-grid" id="calendar"></div>
+
+        <div style="margin: 40px 0; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+            <h2 style="margin-top: 0;">✈️ IDA</h2>
+            <img src="/ida (1).jpg" alt="Itinerario de vuelo" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        </div>
+
+        <div style="margin: 40px 0; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+            <h2 style="margin-top: 0;">✈️ VUELTA</h2>
+            <img src="/vuelta.png" alt="Itinerario de vuelo vuelta" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        </div>
+
+        <div class="files-section">
+            <h2>📁 Documentos Importantes</h2>
+            <div id="file-categories">
+                <div class="file-category">
+                    <h3>✈️ Vuelos</h3>
+                    <input type="file" id="vuelos-file">
+                    <button onclick="uploadFile('vuelos')">Subir Archivo</button>
+                    <div class="file-list" id="vuelos-list"></div>
+                </div>
+                <div class="file-category">
+                    <h3>🚗 Alquiler de Auto</h3>
+                    <input type="file" id="auto-file">
+                    <button onclick="uploadFile('auto')">Subir Archivo</button>
+                    <div class="file-list" id="auto-list"></div>
+                </div>
+                <div class="file-category">
+                    <h3>🏨 Hotel en Miami</h3>
+                    <input type="file" id="hotel-file">
+                    <button onclick="uploadFile('hotel')">Subir Archivo</button>
+                    <div class="file-list" id="hotel-list"></div>
+                </div>
+                <div class="file-category">
+                    <h3>🏠 Casa en Orlando</h3>
+                    <input type="file" id="casa-file">
+                    <button onclick="uploadFile('casa')">Subir Archivo</button>
+                    <div class="file-list" id="casa-list"></div>
+                </div>
+                <div class="file-category">
+                    <h3>🎢 Ticket Universal</h3>
+                    <input type="file" id="universal-file">
+                    <button onclick="uploadFile('universal')">Subir Archivo</button>
+                    <div class="file-list" id="universal-list"></div>
+                </div>
+                <div class="file-category">
+                    <h3>🏰 Ticket Disney</h3>
+                    <input type="file" id="disney-file">
+                    <button onclick="uploadFile('disney')">Subir Archivo</button>
+                    <div class="file-list" id="disney-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weekDays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const dates = [];
+        const startDate = new Date(2024, 11, 8);
+        const endDate = new Date(2024, 11, 22);
+
+        const headerDiv = document.getElementById('calendar-header');
+        weekDays.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'weekday';
+            dayHeader.textContent = day;
+            headerDiv.appendChild(dayHeader);
+        });
+
+        function createCalendar() {
+            const calendar = document.getElementById('calendar');
+            const firstDay = startDate.getDay();
+
+            // Add empty days at the start
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'day-card empty-day';
+                calendar.appendChild(emptyDay);
+            }
+
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                const dayCard = document.createElement('div');
+                dayCard.className = 'day-card';
+                
+                const dateNum = d.getDate();
+                const timestamp = d.getTime();
+                
+                // Special handling for December 22nd
+                if (dateNum === 22) {
+                    dayCard.innerHTML = `
+                        <div class="date">${dateNum}</div>
+                        <div class="activities" id="activities-${timestamp}">
+                            ${getActivitiesFromStorage(d)}
+                        </div>
+                        <div class="add-activity">
+                            <input type="text" id="input-${timestamp}" placeholder="Agregar actividad...">
+                            <button onclick="addActivity(${timestamp})">Agregar</button>
+                        </div>
+                    `;
+                } else {
+                    dayCard.innerHTML = `
+                        <div class="date">${dateNum}</div>
+                        <div class="activities" id="activities-${timestamp}">
+                            ${getActivitiesFromStorage(d)}
+                        </div>
+                        <div class="add-activity">
+                            <input type="text" id="input-${timestamp}" placeholder="Agregar actividad...">
+                            <button onclick="addActivity(${timestamp})">Agregar</button>
+                        </div>
+                    `;
+                }
+                calendar.appendChild(dayCard);
+            }
+        }
+
+        function getActivitiesFromStorage(date) {
+            const activities = JSON.parse(localStorage.getItem(`activities-${date.getTime()}`) || '[]');
+            return activities.map(activity => `
+                <div class="activity">
+                    <span>${activity}</span>
+                    <button onclick="deleteActivity(${date.getTime()}, '${activity}')" style="width: auto; padding: 2px 6px;">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function addActivity(timestamp) {
+            const input = document.getElementById(`input-${timestamp}`);
+            const activity = input.value.trim();
+            
+            if (activity) {
+                const activities = JSON.parse(localStorage.getItem(`activities-${timestamp}`) || '[]');
+                activities.push(activity);
+                localStorage.setItem(`activities-${timestamp}`, JSON.stringify(activities));
+                
+                const activitiesDiv = document.getElementById(`activities-${timestamp}`);
+                activitiesDiv.innerHTML = getActivitiesFromStorage(new Date(timestamp));
+                input.value = '';
+
+                showNotification('Actividad agregada y sincronizada con otros usuarios');
+            }
+        }
+
+        function deleteActivity(timestamp, activity) {
+            const activities = JSON.parse(localStorage.getItem(`activities-${timestamp}`) || '[]');
+            const index = activities.indexOf(activity);
+            if (index > -1) {
+                activities.splice(index, 1);
+                localStorage.setItem(`activities-${timestamp}`, JSON.stringify(activities));
+                
+                const activitiesDiv = document.getElementById(`activities-${timestamp}`);
+                activitiesDiv.innerHTML = getActivitiesFromStorage(new Date(timestamp));
+                
+                showNotification('Actividad eliminada y sincronizada con otros usuarios');
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(20px)';
+            notification.style.transition = 'all 0.3s ease';
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.2em;">✓</span>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        function uploadFile(category) {
+            const fileInput = document.getElementById(`${category}-file`);
+            const file = fileInput.files[0];
+            
+            if (file) {
+                const files = JSON.parse(localStorage.getItem(`files-${category}`) || '[]');
+                files.push({
+                    name: file.name,
+                    date: new Date().toLocaleString()
+                });
+                localStorage.setItem(`files-${category}`, JSON.stringify(files));
+                updateFileList(category);
+                fileInput.value = '';
+                showNotification('Archivo subido exitosamente');
+            }
+        }
+
+        function deleteFile(category, fileName) {
+            const files = JSON.parse(localStorage.getItem(`files-${category}`) || '[]');
+            const index = files.findIndex(f => f.name === fileName);
+            if (index > -1) {
+                files.splice(index, 1);
+                localStorage.setItem(`files-${category}`, JSON.stringify(files));
+                updateFileList(category);
+                showNotification('Archivo eliminado exitosamente');
+            }
+        }
+
+        function updateFileList(category) {
+            const fileList = document.getElementById(`${category}-list`);
+            const files = JSON.parse(localStorage.getItem(`files-${category}`) || '[]');
+            
+            fileList.innerHTML = files.map(file => `
+                <div class="file-item">
+                    <span>📄 ${file.name}</span>
+                    <div>
+                        <small>${file.date}</small>
+                        <button onclick="deleteFile('${category}', '${file.name}')" style="width: auto; padding: 2px 6px; margin-left: 10px;">🗑️</button>
+                    </div>
+                </div>
+            `).join('') || '<p>No hay archivos</p>';
+        }
+
+        createCalendar();
+        ['vuelos', 'auto', 'hotel', 'casa', 'universal', 'disney'].forEach(category => {
+            updateFileList(category);
+        });
+    </script>
+</body>
+</html>
